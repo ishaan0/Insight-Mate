@@ -13,10 +13,14 @@ const Dashboard = () => {
     string | null
   >(null);
 
+  const utils = trpc.useContext();
+
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
   const { mutate: deleteFile } = trpc.deleteFile.useMutation({
-    onSuccess: () => {},
+    onSuccess: () => {
+      utils.getUserFiles.invalidate();
+    },
     onMutate({ id }) {
       setCurrentlyDeletingFile(id);
     },
