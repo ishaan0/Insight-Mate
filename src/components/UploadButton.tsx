@@ -5,11 +5,26 @@ import Dropzone from "react-dropzone";
 import { Button } from "./ui/button";
 import { Cloud, File, Loader2 } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { useUploadThing } from "@/lib/uploadthing";
+import { useToast } from "@/components/ui/use-toast";
+import { trpc } from "@/app/_trpc/client";
+import { useRouter } from "next/navigation";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const { startUpload } = useUploadThing("pdfUploader");
+  const { toast } = useToast();
+  const router = useRouter();
   const isSubscribed = true;
+
+  const { mutate: startPolling } = trpc.getFile.useMutation({
+    onSuccess: (file) => {
+      router.push(`/dashboard/${file.id}`);
+    },
+    retry: true,
+    retryDelay: 500,
+  });
 
   const startSimulatedProgress = () => {
     setUploadProgress(0);
@@ -32,13 +47,31 @@ const UploadDropzone = () => {
       multiple={false}
       onDrop={async (acceptedFile) => {
         setIsUploading(true);
-
         const progressInterval = startSimulatedProgress();
 
-        // handle uploading
+        const res = await startUpload(acceptedFile);
+        if (!res) {
+          return toast({
+            title: "Something went wrong",
+            description: "Please try again later",
+            variant: "destructive",
+          });
+        }
+
+        const [fileResponse] = res;
+        const key = fileResponse?.key;
+
+        if (!key) {
+          return toast({
+            title: "Something went wrong",
+            description: "Please try again later",
+            variant: "destructive",
+          });
+        }
 
         clearInterval(progressInterval);
         setUploadProgress(100);
+        startPolling({ key });
       }}
     >
       {({ getRootProps, getInputProps, acceptedFiles }) => (
