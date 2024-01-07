@@ -1,6 +1,7 @@
+import { User } from "@prisma/client";
 import { db } from ".";
 
-let currentUser: any;
+let currentUser: User | null;
 
 export const getCurrentUser = async () => {
   if (!currentUser) currentUser = await db.user.findFirst();
