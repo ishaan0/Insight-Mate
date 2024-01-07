@@ -39,12 +39,11 @@ export const ourFileRouter = {
 
         // vectorize and index entire document
         const pinecone = await getPineconeClient();
-        const pineconeIndex = pinecone.index("insight-mate");
+        const pineconeIndex = pinecone.Index("insight-mate");
 
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
         });
-        // const embeddings = new OpenAIEmbeddings();
 
         await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
           pineconeIndex,
@@ -59,7 +58,6 @@ export const ourFileRouter = {
           },
         });
       } catch (error: any) {
-        console.log("error", error);
         await db.file.update({
           data: {
             uploadStatus: "FAILED",

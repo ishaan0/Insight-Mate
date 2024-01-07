@@ -4,6 +4,9 @@ import { ChevronLeft, Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "../ui/button";
+import ChatInput from "./ChatInput";
+import { ChatContextProvider } from "./ChatContext";
+import Messages from "./Messages";
 
 interface ChatWrapperProps {
   fileId: string;
@@ -29,6 +32,7 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
             </p>
           </div>
         </div>
+        <ChatInput isDisabled />
       </div>
     );
 
@@ -42,6 +46,7 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
             <p className="text-zinc-500 text-sm">This won&apos;t take long.</p>
           </div>
         </div>
+        <ChatInput isDisabled />
       </div>
     );
 
@@ -67,23 +72,20 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
             </Link>
           </div>
         </div>
+        <ChatInput isDisabled />
       </div>
     );
 
   return (
-    <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
-      <div className="flex-1 flex justify-center items-center flex-col mb-28">
-        <div className="flex flex-col items-center gap-2">
-          <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-          <h3 className="font-semibold text-xl">Loading...</h3>
-          <p className="text-zinc-500 text-sm">
-            We&apos;re preparing your PDF.
-          </p>
+    <ChatContextProvider fileId={fileId}>
+      <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
+        <div className="flex-1 justify-between flex flex-col mb-28">
+          <Messages fileId={fileId} />
         </div>
-      </div>
 
-      {/* <ChatInput isDisabled /> */}
-    </div>
+        <ChatInput />
+      </div>
+    </ChatContextProvider>
   );
 };
 
