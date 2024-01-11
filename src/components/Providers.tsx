@@ -1,8 +1,8 @@
-"use client";
-import { trpc } from "@/app/_trpc/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/client";
-import React, { ReactNode, useState } from "react";
+'use client';
+import { trpc } from '@/app/_trpc/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { httpBatchLink } from '@trpc/client';
+import React, { ReactNode, useState } from 'react';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -14,10 +14,10 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:3000/api/trpc",
+          url: 'http://localhost:3000/api/trpc',
         }),
       ],
-    })
+    }),
   );
 
   return (

@@ -1,19 +1,19 @@
-"use client";
-import React, { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import Dropzone from "react-dropzone";
-import { Button } from "./ui/button";
-import { Cloud, File, Loader2 } from "lucide-react";
-import { Progress } from "./ui/progress";
-import { useUploadThing } from "@/lib/uploadthing";
-import { useToast } from "@/components/ui/use-toast";
-import { trpc } from "@/app/_trpc/client";
-import { useRouter } from "next/navigation";
+'use client';
+import { trpc } from '@/app/_trpc/client';
+import { useToast } from '@/components/ui/use-toast';
+import { useUploadThing } from '@/lib/uploadthing';
+import { Cloud, File, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Dropzone from 'react-dropzone';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { Progress } from './ui/progress';
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const { startUpload } = useUploadThing("pdfUploader");
+  const { startUpload } = useUploadThing('pdfUploader');
   const { toast } = useToast();
   const router = useRouter();
   const isSubscribed = true;
@@ -52,9 +52,9 @@ const UploadDropzone = () => {
         const res = await startUpload(acceptedFile);
         if (!res) {
           return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
-            variant: "destructive",
+            title: 'Something went wrong',
+            description: 'Please try again later',
+            variant: 'destructive',
           });
         }
 
@@ -63,9 +63,9 @@ const UploadDropzone = () => {
 
         if (!key) {
           return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
-            variant: "destructive",
+            title: 'Something went wrong',
+            description: 'Please try again later',
+            variant: 'destructive',
           });
         }
 
@@ -91,7 +91,7 @@ const UploadDropzone = () => {
                   and drop
                 </p>
                 <p className="text-xs text-zinc-500">
-                  PDF (up to {isSubscribed ? "16" : "4"}MB)
+                  PDF (up to {isSubscribed ? '16' : '4'}MB)
                 </p>
               </div>
 

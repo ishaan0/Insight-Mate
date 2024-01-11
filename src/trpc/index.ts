@@ -1,8 +1,8 @@
-import { db } from "@/db";
-import { privateProcedure, router } from "./trpc";
-import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { INFINITE_QUERY_LIMIT } from "@/config/infinite-query";
+import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query';
+import { db } from '@/db';
+import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
+import { privateProcedure, router } from './trpc';
 
 export const appRouter = router({
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
@@ -27,7 +27,7 @@ export const appRouter = router({
         },
       });
 
-      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
 
       return file;
     }),
@@ -44,7 +44,7 @@ export const appRouter = router({
         },
       });
 
-      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
 
       await db.file.delete({
         where: {
@@ -64,7 +64,7 @@ export const appRouter = router({
           userId: ctx.userId,
         },
       });
-      if (!file) return { status: "PENDING" as const };
+      if (!file) return { status: 'PENDING' as const };
 
       return { status: file.uploadStatus };
     }),
@@ -75,7 +75,7 @@ export const appRouter = router({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
         fileId: z.string(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { userId } = ctx;
@@ -89,7 +89,7 @@ export const appRouter = router({
         },
       });
 
-      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+      if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
 
       const messages = await db.message.findMany({
         take: limit + 1,
@@ -97,7 +97,7 @@ export const appRouter = router({
           fileId,
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: 'desc',
         },
         cursor: cursor ? { id: cursor } : undefined,
         select: {

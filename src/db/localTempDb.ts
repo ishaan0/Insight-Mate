@@ -1,5 +1,5 @@
-import { User } from "@prisma/client";
-import { db } from ".";
+import { User } from '@prisma/client';
+import { db } from '.';
 
 let currentUser: User | null;
 

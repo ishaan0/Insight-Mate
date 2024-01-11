@@ -1,12 +1,12 @@
-"use client";
-import { trpc } from "@/app/_trpc/client";
-import { ChevronLeft, Loader2, XCircle } from "lucide-react";
-import Link from "next/link";
-import React from "react";
-import { buttonVariants } from "../ui/button";
-import ChatInput from "./ChatInput";
-import { ChatContextProvider } from "./ChatContext";
-import Messages from "./Messages";
+'use client';
+import { trpc } from '@/app/_trpc/client';
+import { ChevronLeft, Loader2, XCircle } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+import { buttonVariants } from '../ui/button';
+import { ChatContextProvider } from './ChatContext';
+import ChatInput from './ChatInput';
+import Messages from './Messages';
 
 interface ChatWrapperProps {
   fileId: string;
@@ -17,8 +17,8 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
     { fileId },
     {
       refetchInterval: (data) =>
-        data?.status === "SUCCESS" || data?.status === "FAILED" ? false : 500,
-    }
+        data?.status === 'SUCCESS' || data?.status === 'FAILED' ? false : 500,
+    },
   );
 
   if (isLoading)
@@ -37,7 +37,7 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
       </div>
     );
 
-  if (data?.status === "PROCESSING")
+  if (data?.status === 'PROCESSING')
     return (
       <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
@@ -51,7 +51,7 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
       </div>
     );
 
-  if (data?.status === "FAILED")
+  if (data?.status === 'FAILED')
     return (
       <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
@@ -64,8 +64,8 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ fileId }) => {
             <Link
               href="/dashboard"
               className={buttonVariants({
-                variant: "secondary",
-                className: "mt-4",
+                variant: 'secondary',
+                className: 'mt-4',
               })}
             >
               <ChevronLeft className="h-3 w-3 mr-1.5" />

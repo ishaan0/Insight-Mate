@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Expand, Loader2 } from "lucide-react";
-import SimpleBar from "simplebar-react";
-import { Document, Page } from "react-pdf";
-import { useToast } from "./ui/use-toast";
-import { useResizeDetector } from "react-resize-detector";
+import { Expand, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Document, Page } from 'react-pdf';
+import { useResizeDetector } from 'react-resize-detector';
+import SimpleBar from 'simplebar-react';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { useToast } from './ui/use-toast';
 
 interface PdfFullscreenProps {
   fileUrl: string;
@@ -44,9 +44,9 @@ const PdfFullscreen: React.FC<PdfFullscreenProps> = ({ fileUrl }) => {
               }
               onLoadError={() => {
                 toast({
-                  title: "Error loading PDF",
-                  description: "Please try again later",
-                  variant: "destructive",
+                  title: 'Error loading PDF',
+                  description: 'Please try again later',
+                  variant: 'destructive',
                 });
               }}
               onLoadSuccess={({ numPages }) => setNumPages(numPages)}

@@ -1,21 +1,21 @@
-import PdfRenderer from "@/components/PdfRenderer";
-import ChatWrapper from "@/components/chat/ChatWrapper";
-import { db } from "@/db";
-import { getCurrentUser } from "@/db/localTempDb";
-import { notFound, redirect } from "next/navigation";
-import React from "react";
+import PdfRenderer from '@/components/PdfRenderer';
+import ChatWrapper from '@/components/chat/ChatWrapper';
+import { db } from '@/db';
+import { getCurrentUser } from '@/db/localTempDb';
+import { notFound, redirect } from 'next/navigation';
+import React from 'react';
 
-interface pageProps {
+interface PageProps {
   params: {
     fileId: string;
   };
 }
 
-const page: React.FC<pageProps> = async ({ params }) => {
+const page: React.FC<PageProps> = async ({ params }) => {
   const { fileId } = params;
   const user = await getCurrentUser();
 
-  if (!user || !user?.id) redirect("/");
+  if (!user || !user?.id) redirect('/');
 
   const file = await db.file.findFirst({
     where: {

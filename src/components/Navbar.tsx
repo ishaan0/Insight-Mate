@@ -1,8 +1,7 @@
-import React from "react";
-import MaxWidthWrapper from "./MaxWidthWrapper";
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import MaxWidthWrapper from './MaxWidthWrapper';
+import { buttonVariants } from './ui/button';
 
 const Navbar = () => {
   return (
@@ -20,8 +19,8 @@ const Navbar = () => {
               <Link
                 href="/pricing"
                 className={buttonVariants({
-                  variant: "ghost",
-                  size: "sm",
+                  variant: 'ghost',
+                  size: 'sm',
                 })}
               >
                 Pricing
@@ -29,8 +28,8 @@ const Navbar = () => {
               <Link
                 href="/dashboard"
                 className={buttonVariants({
-                  variant: "ghost",
-                  size: "sm",
+                  variant: 'ghost',
+                  size: 'sm',
                 })}
               >
                 Login
@@ -38,7 +37,7 @@ const Navbar = () => {
               <Link
                 href="/register"
                 className={buttonVariants({
-                  size: "sm",
+                  size: 'sm',
                 })}
               >
                 Register

@@ -1,32 +1,32 @@
-"use client";
+'use client';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ChevronDown,
   ChevronUp,
   Loader2,
   RotateCw,
   Search,
-} from "lucide-react";
-import React, { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-import { useToast } from "./ui/use-toast";
-import { useResizeDetector } from "react-resize-detector";
-import { Button } from "./ui/button";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "./ui/input";
-import { cn } from "@/lib/utils";
-import SimpleBar from "simplebar-react";
+} from 'lucide-react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import { useResizeDetector } from 'react-resize-detector';
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+import { z } from 'zod';
+import PdfFullscreen from './PdfFullscreen';
+import { Button } from './ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import "simplebar-react/dist/simplebar.min.css";
-import PdfFullscreen from "./PdfFullscreen";
+} from './ui/dropdown-menu';
+import { Input } from './ui/input';
+import { useToast } from './ui/use-toast';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -61,14 +61,14 @@ const PdfRenderer: React.FC<PdfRendererProps> = ({ url }) => {
     setValue,
   } = useForm<TCustomPageValidator>({
     defaultValues: {
-      page: "1",
+      page: '1',
     },
     resolver: zodResolver(CustomPageValidator),
   });
 
   const handlePageSubmit = ({ page }: TCustomPageValidator) => {
     setCurrPage(Number(page));
-    setValue("page", String(page));
+    setValue('page', String(page));
   };
 
   return (
@@ -79,7 +79,7 @@ const PdfRenderer: React.FC<PdfRendererProps> = ({ url }) => {
             disabled={currPage <= 1}
             onClick={() => {
               setCurrPage((prev) => (prev - 1 > 1 ? prev - 1 : 1));
-              setValue("page", String(currPage - 1));
+              setValue('page', String(currPage - 1));
             }}
             variant="ghost"
             aria-label="previous page"
@@ -88,28 +88,28 @@ const PdfRenderer: React.FC<PdfRendererProps> = ({ url }) => {
           </Button>
           <div className="flex items-center gap-1.5">
             <Input
-              {...register("page")}
+              {...register('page')}
               className={cn(
-                "w-12 h-8",
-                errors.page && "focus-visible:ring-red-500"
+                'w-12 h-8',
+                errors.page && 'focus-visible:ring-red-500',
               )}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === 'Enter') {
                   handleSubmit(handlePageSubmit)();
                 }
               }}
             />
             <p className="text-zinc-700 text-sm space-x-1">
               <span>/</span>
-              <span>{numPages ?? "x"}</span>
+              <span>{numPages ?? 'x'}</span>
             </p>
             <Button
               disabled={numPages === undefined || currPage === numPages}
               onClick={() => {
                 setCurrPage((prev) =>
-                  prev + 1 > numPages! ? numPages! : prev + 1
+                  prev + 1 > numPages! ? numPages! : prev + 1,
                 );
-                setValue("page", String(currPage + 1));
+                setValue('page', String(currPage + 1));
               }}
               variant="ghost"
               aria-label="next page"
@@ -166,9 +166,9 @@ const PdfRenderer: React.FC<PdfRendererProps> = ({ url }) => {
               }
               onLoadError={() => {
                 toast({
-                  title: "Error loading PDF",
-                  description: "Please try again later",
-                  variant: "destructive",
+                  title: 'Error loading PDF',
+                  description: 'Please try again later',
+                  variant: 'destructive',
                 });
               }}
               onLoadSuccess={({ numPages }) => setNumPages(numPages)}
@@ -181,17 +181,17 @@ const PdfRenderer: React.FC<PdfRendererProps> = ({ url }) => {
                   pageNumber={currPage}
                   scale={scale}
                   rotate={rotation}
-                  key={"@" + renderedScale}
+                  key={'@' + renderedScale}
                 />
               ) : null}
 
               <Page
-                className={cn(isLoading ? "hidden" : "")}
+                className={cn(isLoading ? 'hidden' : '')}
                 width={width ? width : 1}
                 pageNumber={currPage}
                 scale={scale}
                 rotate={rotation}
-                key={"@" + scale}
+                key={'@' + scale}
                 loading={
                   <div className="flex justify-center">
                     <Loader2 className="my-24 h-6 w-6 animate-spin" />
