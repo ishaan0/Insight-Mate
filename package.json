@@ -19,6 +19,8 @@
     ]
   },
   "dependencies": {
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "@hookform/resolvers": "^3.3.4",
     "@mantine/hooks": "^7.4.0",
     "@pinecone-database/pinecone": "^1.1.2",
